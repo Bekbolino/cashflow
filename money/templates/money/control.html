@@ -1,0 +1,140 @@
+{% extends "money/layout.html" %}
+
+{% block body %}
+{% load form_tags %}
+{% load static %}
+
+
+<div class="form control-forms">
+
+    <form method="post" class="">
+        {% csrf_token %}
+            <div class="btn-group">
+                <button type="button" class="btn btn-warning dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                    Все Статусы
+                </button>
+                <ul class="dropdown-menu">
+                    {% for status in statuses %}
+                        <li class="dropdown-item line" href="#">
+                            {{status.name}}
+                            <img src="{% static 'money/media/x-circle.svg' %}" data-form-type="status" data-pk="{{status.pk}}" class="delete-item">
+
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        <div class="mb">
+            <label  class="form-label">Статусы:</label>
+            {{ status_f.name|add_class:"form-control" }}
+            {{ status_f.name.errors }}
+            <input type="hidden" name="form_type" value="status">
+        </div>
+            <button type="submit" class="btn btn-primary btn-change">Сохранить</button>
+    </form>
+
+    <form method="post" class="">
+        {% csrf_token %}
+        
+            <div class="btn-group">
+                <button type="button" class="btn btn-warning dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                Все Типы
+                </button>
+                <ul class="dropdown-menu">
+                    {% for type in types %}
+                        <li class="dropdown-item line" href="#">
+                            {{type.name}}
+                            
+                            <img src="{% static 'money/media/x-circle.svg' %}" data-form-type="type" data-pk="{{type.pk}}" class="delete-item">
+
+                        </li>
+                    {% endfor %}
+                
+                </ul>
+            </div>
+        <div class="mb">
+            <label  class="form-label">Типы:</label>
+            {{ type_f.name|add_class:"form-control" }}
+            {{ type_f.name.errors }}
+            <input type="hidden" name="form_type" value="type">
+
+        </div>
+
+      
+        
+        <button type="submit" class="btn btn-primary btn-change">Сохранить</button>
+    </form>
+
+    <form method="post" class="">
+        {% csrf_token %}
+            <div class="btn-group">
+                <button type="button" class="btn btn-warning dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                    Все Категории
+                </button>
+                <ul class="dropdown-menu">
+                    {% for category in categories %}
+                         <li class="dropdown-item line">
+                            {{category.type}}
+                            <img src="{% static 'money/media/child.svg' %}">
+                            {{category.name}}
+                            <img src="{% static 'money/media/x-circle.svg' %}" data-form-type="category" data-pk="{{category.pk}}" class="delete-item">
+
+                        </li>
+                    {% endfor %}
+                
+                </ul>
+            </div>
+        <div class="mb">
+            <label  class="form-label">Тип</label>
+            {{ category_f.type|add_class:"form-select" }}
+            {{ category_f.type.errors }}
+        </div>
+        <div class="mb">
+            <label  class="form-label">Категория</label>
+            {{ category_f.name|add_class:"form-control" }}
+            {{ category_f.name.errors }}
+            <input type="hidden" name="form_type" value="category">
+
+        </div>
+        <button type="submit" class="btn btn-primary btn-change">Сохранить</button>
+    </form>
+    <form method="post" class="">
+        {% csrf_token %}
+            <div class="btn-group">
+                <button type="button" class="btn btn-warning dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                Все Субкатегории
+                </button>
+                <ul class="dropdown-menu">
+                    {% for subcategory in subcategories %}
+                        <li class="dropdown-item line" href="#">
+                            {{subcategory.category}}
+                            <img src="{% static 'money/media/child.svg' %}">
+                            {{subcategory.name}}
+                            <img src="{% static 'money/media/x-circle.svg' %}" data-form-type="subcategory" data-pk="{{subcategory.pk}}" class="delete-item">
+
+                        </li>
+                    {% endfor %}
+                
+                </ul>
+            </div>
+
+        <div class="mb">
+            <label  class="form-label">Категория</label>
+            {{subcategory_f.category|add_class:"form-select" }}
+            {{ subcategory_f.category.errors }} 
+        </div>
+
+
+        <div class="mb">
+            <label  class="form-label">Подкатегория</label>
+            {{ subcategory_f.name|add_class:"form-control"}}
+            {{ subcategory_f.name.errors }}
+            <input type="hidden" name="form_type" value="subcategory">
+
+        </div>
+
+        
+        <button type="submit" class="btn btn-primary btn-change">Сохранить</button>
+    </form>
+</div>
+  
+{% endblock  %}

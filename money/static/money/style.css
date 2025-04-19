@@ -1,0 +1,62 @@
+.form {
+    background: black;
+    color: white;
+    width: 90%;
+    padding: 20px;
+    border-radius: 15px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.control-forms {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 60px;
+}
+
+.gap-20 {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.filter-form{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    padding: 20px;
+}
+
+.table-cash th:first-child {
+
+    padding-left: 30px;
+}
+
+.line {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.table-cash td:last-child {
+    padding-right: 30px
+}
+
+.table-cash {
+    width: 90%;
+    margin: 20px auto;
+    background-color: black;
+}
+
+
+
+.btn-change {
+    margin-top: 15px;
+}
+
+.btn-warning {
+    margin-bottom: 20px;
+}
+

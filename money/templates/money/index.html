@@ -1,0 +1,129 @@
+{% extends "money/layout.html" %}
+{% load static %}
+
+{% block filter %}
+
+<img src="{% static 'money/media/sliders.svg' %}" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+{% endblock  %}
+{% block body %}
+<script>
+  const relations = {{ relations_json|safe }};
+</script>
+
+
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">Фильтр</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+        <form method="get" class="row g-3 mb-3 filter-form">
+          <div class="col-md">
+            <label>С даты:</label>
+            <input type="date" name="date_from" class="form-control" value="{{ request.GET.date_from }}">
+          </div>
+
+          <div class="col-md">
+            <label>По дату:</label>
+            <input type="date" name="date_to" class="form-control" value="{{ request.GET.date_to }}">
+          </div>
+
+          <div class="col-md">
+            <label>Статус:</label>
+            <select name="status" class="form-control">
+              <option value="">Все</option>
+              {% for status in statuses %}
+              <option value="{{ status.id }}" {% if request.GET.status == status.id|stringformat:"s" %}selected{% endif %}>
+                {{ status.name }}
+              </option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <div class="col-md">
+            <label>Тип:</label>
+            <select name="type" class="form-control">
+              <option value="">Все</option>
+              {% for type in types %}
+              <option value="{{ type.id }}" {% if request.GET.type == type.id|stringformat:"s" %}selected{% endif %}>
+                {{ type.name }}
+              </option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <div class="col-md">
+            <label>Категория:</label>
+            <select name="category" class="form-control">
+              <option value="">Все</option>
+              {% for cat in categories %}
+              <option value="{{ cat.id }}" {% if request.GET.category == cat.id|stringformat:"s" %}selected{% endif %}>
+                {{ cat.name }}
+              </option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <div class="col-md">
+            <label>Подкатегория:</label>
+            <select name="subcategory" class="form-control">
+              <option value="">Все</option>
+              {% for sub in subcategories %}
+              <option value="{{ sub.id }}" {% if request.GET.subcategory == sub.id|stringformat:"s" %}selected{% endif %}>
+                {{ sub.name }}
+              </option>
+              {% endfor %}
+            </select>
+          </div>
+        
+            <div class="">
+              <button type="submit" class="btn btn-primary">Фильтровать</button>
+            </div>
+        </form>
+        
+    </div>
+  </div>
+</div>
+
+
+<table class="table">
+    <thead class="bg-dark">
+      <tr>
+        <th></th>
+        <th scope="col">Дата</th>
+        <th scope="col">Статус</th>
+        <th scope="col">Тип</th>
+        <th scope="col">Категория</th>
+        <th scope="col">Подкатегория</th>
+        <th scope="col">Сумма</th>
+        <th scope="col">Комментарий</th>
+        <th scope="col"></th>
+
+      </tr>
+    </thead>
+    <tbody>
+      {% for cash in cashes %}
+      
+      <tr>
+        <td scope="row"><a href="{% url 'edit' num=cash.id %}"><img src="{% static 'money/media/edit.svg' %}"></a></td>
+        <td >{{cash.date}}</td>
+        <td>{{cash.status}}</td>
+        <td>{{cash.type}}</td>
+        <td>{{cash.category}}</td>
+        <td>{{cash.subcategory}}</td>
+        <td>{{cash.amount}}</td>
+        <td>{{cash.comment}}</td>
+        <td><button class="btn btn-danger delete-cashflow" data-id={{cash.id}}>Удалить</button></td>
+
+      </tr>
+      {% endfor %}
+  
+    </tbody>
+  </table>
+
+
+
+
+
+{% endblock  %}

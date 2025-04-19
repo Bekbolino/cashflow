@@ -1,0 +1,82 @@
+{% extends "money/layout.html" %}
+{% load form_tags %}
+{% block body %}
+<script>
+  const CATEGORIES = {{ categories_json|safe }};
+  const SUBCATEGORIES = {{ subcategories_json|safe }};
+</script>
+
+<form class="row g-3 needs-validation form" method="post" novalidate>
+  {% csrf_token %}
+
+  <div class="row">
+  <div class="col-md-6">
+    <label class="form-label">Тип</label>
+    {{ cashflow.type|add_class:"form-control" }}
+    <div class="invalid-feedback">Пожалуйста, выберите тип.</div>
+    {{ cashflow.type.errors }}
+  </div>
+
+  <div class="col-md-6">
+    <label class="form-label">Категория</label>
+    {{ cashflow.category|add_class:"form-control" }}
+    <div class="invalid-feedback">Пожалуйста, выберите категорию.</div>
+    {{ cashflow.category.errors }}
+  </div>
+
+  <div class="col-md-6">
+    <label class="form-label">Подкатегория</label>
+    {{ cashflow.subcategory|add_class:"form-control" }}
+    <div class="invalid-feedback">Пожалуйста, выберите подкатегорию.</div>
+    {{ cashflow.subcategory.errors }}
+  </div>
+
+  <div class="col-md-6">
+    <label class="form-label">Дата</label>
+    {{ cashflow.date|add_class:"form-control" }}
+    {{ cashflow.date.errors }}
+  </div>
+
+  <div class="col-md-6">
+    <label class="form-label">Статус</label>
+    {{ cashflow.status|add_class:"form-control" }}
+    {{ cashflow.status.errors }}
+  </div>
+
+  <div class="col-md-6">
+    <label class="form-label">Сумма</label>
+    {{ cashflow.amount|add_class:"form-control" }}
+    <div class="invalid-feedback">Пожалуйста, укажите сумму.</div>
+    {{ cashflow.amount.errors }}
+  </div>
+</div>
+
+  <div class="col-12">
+    <label class="form-label">Комментарий </label>
+    {{ cashflow.comment|add_class:"form-control" }}
+    {{ cashflow.comment.errors }}
+  </div>
+
+  <div class="col-12">
+    <button class="btn btn-primary mt-3" type="submit">Добавить</button>
+  </div>
+</form>
+
+<script>
+  // Bootstrap клиентская валидация
+  (function () {
+    'use strict'
+    const forms = document.querySelectorAll('.needs-validation')
+    Array.from(forms).forEach(function (form) {
+      form.addEventListener('submit', function (event) {
+        if (!form.checkValidity()) {
+          event.preventDefault()
+          event.stopPropagation()
+        }
+        form.classList.add('was-validated')
+      }, false)
+    })
+  })()
+</script>
+
+{% endblock %}
